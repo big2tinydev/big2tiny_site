@@ -1,0 +1,54 @@
+<template>
+  <q-page class="q-pa-lg">
+    <p>Todo Page</p>
+
+    <q-list
+      bordered
+      separator>
+
+      <task
+        v-for="(task, key) in tasks"
+        :key="key"
+        :task="task"
+        :id="key"
+      ></task>
+
+    </q-list>
+
+    <div class="absolute-bottom text-center q-mb-sm">
+      <q-btn
+      @click="showAddTask = true"
+      round
+      color="primary"
+      size="24px"
+      icon="add"
+    />
+    </div>
+
+    <q-dialog v-model="showAddTask">
+      <add-task/>
+    </q-dialog>
+
+  </q-page>
+</template>
+
+<script>
+import {mapGetters} from 'vuex'
+
+
+export default {
+  data(){
+    return {
+      showAddTask: false
+    }
+  },
+  computed: {
+    ...mapGetters('tasks', ['tasks'])
+  },
+  components: {
+    'task': require('components/tasks/Task.vue').default,
+    'add-task': require('components/tasks/AddTask/AddTask.vue').default
+  }
+}
+</script>
+
